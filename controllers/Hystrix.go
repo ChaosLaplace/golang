@@ -26,19 +26,24 @@ func Hystrix(c *gin.Context) {
 
 	for i := 0; i <= 9; i++ {
 		start1 := time.Now()
+		// 阻塞使用 hystrix.Do 並發用 hystrix.Go
 		hystrix.Do("test", RunFunc, func(e error) error {
 			fmt.Println("[Hystrix] 服务器错误 触发 fallbackFunc 调用函数执行失败 : ", e)
 			return nil
 		})
 		fmt.Println("[Hystrix] 请求次数:", i+1, ";用时:", time.Now().Sub(start1), ";熔断器开启状态:", cbs.IsOpen(), "请求是否允许：", cbs.AllowRequest())
+
 		time.Sleep(time.Second)
 	}
 }
 
 func RunFunc() error {
 	rand.Seed(time.Now().Unix())
-	if rand.Intn(10) > 5 {
-		fmt.Println("[Hystrix] RunFunc 执行失败")
+
+	intn := rand.Intn(10)
+	// 錯誤次數
+	if intn > 5 {
+		fmt.Printf("[Hystrix] RunFunc 执行失败 | Intn=%v | ", intn)
 		return errors.New("[Hystrix] RunFunc ERROR")
 	}
 	fmt.Println("[Hystrix] RunFunc 执行成功")

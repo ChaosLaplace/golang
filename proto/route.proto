@@ -1,0 +1,35 @@
+// brew install protobuf
+// go get -u google.golang.org/protobuf/cmd/protoc-gen-go
+// go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
+
+// GOPATH="/Users/chaos/go"
+// cp protoc-gen-go-grpc /usr/local/bin/
+
+// 產生 route.pb 文件和 route_grpc.pb
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative ./proto/route.proto
+
+// protoc --version => libprotoc 3.21.7
+syntax = "proto3";
+
+// 指定輸出 go 語言的原始碼到哪個目錄以及檔名稱
+// 最終在 test.proto 目錄生成 test_grpc.pb.go
+option go_package = "./";
+
+package proto;
+
+/* 定義要回傳的 message 類型，我們想回傳的是一個位置情報 */
+/* 座標訊息 */
+message Point {
+    int32 latitude = 1; // 把一個數字作為key使用，可以壓縮長度。要從 1 開始。
+    int32 longitude = 2;
+}
+/* 相關訊息 */
+message Feature {
+    string name = 1;
+    Point location = 2;
+}
+
+service RouteGuide {
+  // Unary
+  rpc GetFeature(Point) returns (Feature) {}
+}
