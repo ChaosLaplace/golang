@@ -1,11 +1,11 @@
 ## golang skills
-[Hystrix 熔斷]
+1.[Hystrix 熔斷]
 
-[gRPC]
+2.[gRPC]
+
+3.[kafka]
 
 ## goal
-[kafka]
-
 [ELK]
 
 ## MacOS Environment
@@ -84,6 +84,36 @@ brew services restart mysql
 // redis 的配置文件 /usr/local/etc/redis.conf
 brew install redis
 brew services start redis
+```
+## Kafka
+### 安裝
+```sh
+brew install kafka
+
+安裝kafka是需要依賴於zookeeper的，所以安裝kafka的時候也會包含zookeeper 
+kafka的安裝目錄：/usr/local/Cellar/kafka 
+kafka的配置文件目錄：/usr/local/etc/kafka 
+kafka服務的配置文件：/usr/local/etc/kafka/server.properties 
+zookeeper配置文件： /usr/local/etc/kafka/zookeeper.properties
+
+# server.properties
+broker.id=0
+listeners=PLAINTEXT://:9092
+advertised.listeners=PLAINTEXT://127.0.0.1:9092
+log.dirs=/usr/local/var/lib/kafka-logs
+
+# zookeeper.properties
+dataDir=/usr/local/var/lib/zookeeper
+clientPort=2181
+maxClientCnxns=0
+```
+
+### 啟動 Zookeeper & Kafka
+```sh
+# # 啟動 Kafka 之前先啟動 Zookeeper
+cd /usr/local/Cellar/kafka/1.0.0
+./bin/zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
+./bin/kafka-server-start /usr/local/etc/kafka/server.properties
 ```
 
 ## Docker
