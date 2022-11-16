@@ -14,8 +14,8 @@ func InitRouter() *gin.Engine {
 	router.GET("/grpcServer", controllers.GrpcServer)
 	router.GET("/grpcClient", controllers.GrpcClient)
 	// Kafka
-	router.GET("/kafkaProducer", controllers.Producer)
-	router.GET("/kafkaConsumer", controllers.Consumer)
+	router.GET("/kafkaProducer", controllers.KafkaProducer)
+	router.GET("/kafkaConsumer", controllers.KafkaConsumer)
 
 	return router
 }

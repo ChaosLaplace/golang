@@ -111,7 +111,7 @@ maxClientCnxns=0
 ### 啟動 Zookeeper & Kafka
 ```sh
 # # 啟動 Kafka 之前先啟動 Zookeeper
-cd /usr/local/Cellar/kafka/1.0.0
+cd /usr/local/Cellar/kafka/3.3.1_1
 ./bin/zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
 ./bin/kafka-server-start /usr/local/etc/kafka/server.properties
 ```
