@@ -5,7 +5,10 @@ go 1.17
 require (
 	github.com/Shopify/sarama v1.37.2
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
+	github.com/boombuler/barcode v1.0.1
 	github.com/gin-gonic/gin v1.8.1
+	github.com/pquerna/otp v1.3.0
+	github.com/stretchr/testify v1.8.0
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
 )
@@ -49,4 +52,8 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-require github.com/smartystreets/goconvey v1.7.2 // indirect
+require (
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/smartystreets/goconvey v1.7.2 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
