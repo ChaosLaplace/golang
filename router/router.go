@@ -16,7 +16,9 @@ func InitRouter() *gin.Engine {
 	// Kafka
 	router.GET("/kafkaProducer", controllers.KafkaProducer)
 	router.GET("/kafkaConsumer", controllers.KafkaConsumer)
-	// HTTP Basic Authentication && TOTP
+	// HENNGE Mission 1 - Write a program which fulfills the requirements below
+	router.GET("/missionHENNGE", controllers.MissionHENNGE)
+	// HENNGE Mission 2 - HTTP Basic Authentication && TOTP
 	router.GET("/authTotp", controllers.AuthTotp)
 
 	return router
