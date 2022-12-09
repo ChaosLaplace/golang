@@ -20,6 +20,8 @@ func InitRouter() *gin.Engine {
 	router.GET("/missionHENNGE", controllers.MissionHENNGE)
 	// HENNGE Mission 2 - HTTP Basic Authentication && TOTP
 	router.GET("/authTotp", controllers.AuthTotp)
+	// ip2region 版本升級到 2.11.0
+	router.GET("/ip2region", controllers.Ip2region)
 
 	return router
 }
