@@ -7,6 +7,7 @@ require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/boombuler/barcode v1.0.1
 	github.com/gin-gonic/gin v1.8.1
+	github.com/lionsoul2014/ip2region/binding/golang v0.0.0-20221209023550-d117f72d584d
 	github.com/pquerna/otp v1.3.0
 	github.com/stretchr/testify v1.8.0
 	google.golang.org/grpc v1.50.1
