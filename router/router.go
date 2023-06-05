@@ -22,6 +22,8 @@ func InitRouter() *gin.Engine {
 	router.GET("/authTotp", controllers.AuthTotp)
 	// ip2region 版本升級到 2.11.0
 	router.GET("/ip2region", controllers.Ip2region)
+	// 爬蟲
+	router.GET("/climb", controllers.Climb)
 
 	return router
 }
