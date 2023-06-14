@@ -158,3 +158,36 @@ grpc微服務 | https://grpc.io
 
 ### elasticsearch
 分佈式搜索引擎 | https://www.elastic.co/cn/products/elasticsearch
+
+
+## Jenkins
+```sh
+更新 apt
+sudo apt update -y
+
+安裝 java 11
+sudo apt install openjdk-11-jdk -y
+
+安裝 Jenkins
+密鑰添加到系統
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+    /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+加一個 Jenkins apt 存儲庫條目
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install fontconfig openjdk-11-jre
+sudo apt-get install jenkins
+
+修改預設 Port 8880
+sudo vim /usr/lib/systemd/system/jenkins.service
+sudo ufw allow 8880
+sudo systemctl daemon-reload
+sudo service jenkins restart
+
+首次訪問
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
