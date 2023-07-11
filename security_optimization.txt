@@ -1,0 +1,100 @@
+[圖片上傳 檢查]
+upload(event) {
+    let file = event.target.files[0];
+    if (file) {
+        // 2MB
+        const maxSize = 5 * 1024 * 1024;
+        if (file.size > maxSize) {
+            this.$toast(this.$t("文件大小超過限制（最大5MB）"));
+            return false;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        this.$http({
+            method: 'formData',
+            data: formData,
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            },
+            url: 'point_img'
+        }).then( res => {
+            if (res.code === 200) {
+
+            } else if (res.code === 401) {
+                this.$toast(res.msg);
+            }
+        })
+    }
+},
+
+[電話號碼 檢查]
+$tel = input('post.tel/s', '');
+$tel = str_replace(' ', '', $tel);
+if ($tel === '') {
+    return json(['code' => 0, 'info' => '']);
+}
+
+$pattern = "/^\+(62|91|90|356|7|995|374|55|961|20|856|880|998|212|30|65|254)\d{8,12}$/";
+if ( !preg_match($pattern, $tel) ) {
+    return json(['code' => 0, 'info' => '']);
+}
+
+[IP 檢查]
+if ( !empty($channel_deposit['notify_ip']) ) {
+    $ip_list  = explode(',', $channel_deposit['notify_ip']);
+    $ip       = get_client_ip(0, 1);
+    $check_ip = false;
+
+    foreach ($ip_list as $v) {
+        $sanitized_ip = filter_var( trim($v), FILTER_VALIDATE_IP);
+        if ($sanitized_ip !== false && $ip === $sanitized_ip) {
+            $check_ip = true;
+            break;
+        }
+    }
+
+    if ( !$check_ip ) {
+        exit($ip . ' 不在白名单');
+    }
+}
+
+function get_client_ip(int $type = 0, bool $adv = false)
+{
+    $type      = $type ? 1 : 0;
+    static $ip = NULL;
+    if ( $ip !== NULL )
+        return $ip[$type];
+    if ( $adv ) {
+        if ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+            // 瀏覽當前頁面的用戶計算機的網關
+            $arr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $pos = array_search('unknown', $arr);
+            if (false !== $pos) unset($arr[$pos]);
+            $ip = trim($arr[0]);
+        }
+        elseif ( isset($_SERVER['HTTP_X_REAL_IP']) ) {
+            // nginx 代理模式下，獲取客戶端真實IP
+            $ip = $_SERVER['HTTP_X_REAL_IP'];
+        }
+        elseif ( isset($_SERVER['HTTP_CLIENT_IP']) ) {
+            // 客戶端的ip
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        elseif ( isset($_SERVER['REMOTE_ADDR']) ) {
+            // 瀏覽當前頁面的用戶計算機的ip地址
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+    }
+    elseif ( isset($_SERVER['REMOTE_ADDR']) ) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    // IP地址合法驗證, 防止通過IP注入攻擊
+    $long = sprintf("%u", ip2long($ip) );
+    $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
+    return $ip[$type];
+}
+
