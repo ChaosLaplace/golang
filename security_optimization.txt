@@ -61,27 +61,27 @@ if ( !empty($channel_deposit['notify_ip']) ) {
 
 function get_client_ip(int $type = 0, bool $adv = false)
 {
-    $type      = $type ? 1 : 0;
+    $type = $type ? 1 : 0;
     static $ip = NULL;
-    if ( $ip !== NULL )
+    if ($ip !== NULL)
         return $ip[$type];
-    if ( $adv ) {
-        if ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+    if ($adv) {
+        if (isset($_SERVER['HTTP_X_REAL_IP'])) {
+            // nginx 代理模式下，獲取客戶端真實IP
+            $ip = $_SERVER['HTTP_X_REAL_IP'];
+        }
+        elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            // 客戶端的 IP
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             // 瀏覽當前頁面的用戶計算機的網關
             $arr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
             $pos = array_search('unknown', $arr);
             if (false !== $pos) unset($arr[$pos]);
             $ip = trim($arr[0]);
         }
-        elseif ( isset($_SERVER['HTTP_X_REAL_IP']) ) {
-            // nginx 代理模式下，獲取客戶端真實IP
-            $ip = $_SERVER['HTTP_X_REAL_IP'];
-        }
-        elseif ( isset($_SERVER['HTTP_CLIENT_IP']) ) {
-            // 客戶端的ip
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        }
-        elseif ( isset($_SERVER['REMOTE_ADDR']) ) {
+        elseif (isset($_SERVER['REMOTE_ADDR'])) {
             // 瀏覽當前頁面的用戶計算機的ip地址
             $ip = $_SERVER['REMOTE_ADDR'];
         }
@@ -89,11 +89,11 @@ function get_client_ip(int $type = 0, bool $adv = false)
             $ip = $_SERVER['REMOTE_ADDR'];
         }
     }
-    elseif ( isset($_SERVER['REMOTE_ADDR']) ) {
+    elseif (isset($_SERVER['REMOTE_ADDR'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
     // IP地址合法驗證, 防止通過IP注入攻擊
-    $long = sprintf("%u", ip2long($ip) );
+    $long = sprintf("%u", ip2long($ip));
     $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
 }
