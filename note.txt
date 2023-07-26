@@ -1,0 +1,8 @@
+[TG 機器人]
+群組添加機器人後 在頻道中輸入「Hello World」
+https://api.telegram.org/bot[TOKEN_ID]/getUpdates
+看返回的群組 ID (chat -> id)
+
+報錯解決
+{"ok":false,"error_code":409,"description":"Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first"}
+https://api.telegram.org/bot[TOKEN_ID]/setWebhook?url=
