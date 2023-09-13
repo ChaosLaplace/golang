@@ -6,3 +6,8 @@ https://api.telegram.org/bot[TOKEN_ID]/getUpdates
 報錯解決
 {"ok":false,"error_code":409,"description":"Conflict: can't use getUpdates method while webhook is active; use deleteWebhook to delete the webhook first"}
 https://api.telegram.org/bot[TOKEN_ID]/setWebhook?url=
+
+[自動播放影片]
+<video style="height:100%; width:100%;" class="hidden sm:block absolute inset-0 object-cover h-full w-full" preload="none" loop="loop" muted="muted" autoplay="autoplay" playsinline="playsinline">
+    <source src="https://videos.teamtailor-cdn.com/tt-videos-production/uploads_converted/cover_large/db04f53c74158ecb24ff02c5949b855c5e76a8c3.mp4" type="video/mp4">
+</video>
