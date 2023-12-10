@@ -35,5 +35,8 @@ func InitRouter() *gin.Engine {
 	router.GET("/heShuo6/:id", controllers.HeShuo6)
 	router.GET("/heShuo7/:exe/:id", controllers.HeShuo7)
 
+	// AsiaYo 面試題
+	router.GET("/AsiaYo", controllers.AsiaYo)
+
 	return router
 }
